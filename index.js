@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
-var which = require("which");
-var dcp = require("duplex-child-process");
-
-// find optipng
-var optipng = which.sync("optipng", { nothrow: true });
+var stream = require("stream");
+var optipng = require("optipng-js");
 
 module.exports = function(opts){
-
-	// just pass through if cjpeg is not installed
-	if (!optipng) return console.error("[pnck] no optipng binary found, just passing through"), (require("stream").PassThrough());
-	
-	// ensure opts
-	if (!opts || typeof opts !== "object") opts = {};
-
-	// hand over to binary
-	return dcp.spawn(optipng, opts);
-
+	var mem = Buffer.allocUnsafe(0);
+	return new stream.Transform({
+		transform(chunk, encoding, fn) {
+			// collect chunks
+			mem = Buffer.concat([mem, chunk]);
+			fn();
+		},
+		flush(fn) {
+			if (mem.length === 0) return this.push(mem), fn();
+			this.push(optipng(mem, opts, console.error).data);
+			fn();
+		}
+	});
 };
