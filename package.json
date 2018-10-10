@@ -1,0 +1,27 @@
+{
+  "name": "pnck",
+  "version": "1.0.0",
+  "description": "streamable mozjpeg",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yetzt/node-pnck.git"
+  },
+  "keywords": [
+    "mozjpeg",
+    "jpeg",
+    "jpg",
+    "compression",
+    "stream"
+  ],
+  "author": "yetzt <node@yetzt.me>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/yetzt/node-pnck/issues"
+  },
+  "homepage": "https://github.com/yetzt/node-pnck#readme",
+  "dependencies": {
+    "duplex-child-process": "^1.0.0",
+    "which": "^1.3.1"
+  }
+}
